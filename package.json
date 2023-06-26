@@ -1,0 +1,30 @@
+{
+  "name": "test-task-for-moy-klass",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/server.js",
+  "scripts": {
+    "start": "node -e 'require(\"./src/server\").startGlobalServer()'",
+    "test": "mocha -r ./test/context/fixture.js ./test/**/* --timeout 10000",
+    "watch": "mocha -r ./test/context/fixture.js ./test/**/* --watch --watch-files ./src/**/* --timeout 10000"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@koa/bodyparser": "^5.0.0",
+    "@koa/router": "^12.0.0",
+    "dotenv": "^16.3.1",
+    "koa": "^2.14.2",
+    "koa-pino-logger": "^4.0.0",
+    "pg": "^8.11.0",
+    "pino": "^8.14.1"
+  },
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "chai-http": "^4.4.0",
+    "mocha": "^10.2.0",
+    "prettier": "^2.8.8",
+    "testcontainers": "^9.9.1"
+  }
+}
