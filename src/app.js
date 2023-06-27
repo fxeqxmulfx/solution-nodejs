@@ -1,25 +1,32 @@
+"use strict";
 require("dotenv").config();
 const Koa = require("koa");
 const setupRouter = require("./context/router");
 const lessonSearchRouter = require("./lesson/search/router");
-const setupLogger = require("./context/log");
+const healthCheckRouter = require("./healthcheck/router");
+const { setupLogger, setupTestLogger } = require("./context/log");
 const setupBodyParser = require("./context/requestBody");
-const { setupPostgres, testSetupPostgres } = require("./context/db");
+const { setupPostgres, setupTestPostgres } = require("./context/db");
+const setupErrorHandler = require("./middleware/errorHandler");
 
 function buildApp() {
   const app = new Koa();
   setupLogger(app);
+  setupErrorHandler(app);
   setupPostgres(app);
   setupBodyParser(app);
+  setupRouter(app, healthCheckRouter);
   setupRouter(app, lessonSearchRouter);
   return app;
 }
 
 function testBuildApp(dbClient) {
   const app = new Koa();
-  setupLogger(app);
-  testSetupPostgres(app, dbClient);
+  setupTestLogger(app);
+  setupErrorHandler(app);
+  setupTestPostgres(app, dbClient);
   setupBodyParser(app);
+  setupRouter(app, healthCheckRouter);
   setupRouter(app, lessonSearchRouter);
   return app;
 }

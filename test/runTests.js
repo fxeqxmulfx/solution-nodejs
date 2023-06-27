@@ -1,3 +1,4 @@
+"use strict";
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const {
@@ -7,6 +8,7 @@ const {
 } = require("./context/db");
 const { startServer, stopServer } = require("../src/server");
 const { testBuildApp } = require("../src/app");
+const deepEqual = require("./deepEqual");
 
 chai.use(chaiHttp);
 
@@ -28,6 +30,9 @@ function selectMethod(server, item) {
 }
 
 function setHeader(request, headers) {
+  if (headers == null) {
+    return;
+  }
   Object.entries(headers).forEach(([key, value]) => {
     request.set(key, value);
   });
@@ -41,7 +46,7 @@ function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function runTests(migration, cases) {
+function runTests(migration, data, cases) {
   describe("", () => {
     let dbClient;
     let testServer;
@@ -51,6 +56,7 @@ function runTests(migration, cases) {
       testApp = testBuildApp(dbClient);
       testServer = startServer(testApp, randomIntFromInterval(1025, 65535));
       await setupMigration(dbClient, migration);
+      await setupMigration(dbClient, data);
     });
     after(async () => {
       await stopServer(testApp, testServer);
@@ -68,8 +74,8 @@ function runTests(migration, cases) {
                 done(err);
                 return;
               }
-              chai.expect(res.status).to.equal(item.status);
-              chai.expect(res.body).to.deep.equal(item.result);
+              chai.expect(item.status).to.equal(res.status);
+              deepEqual(item.result, res.body);
               done();
             });
           } catch (err) {

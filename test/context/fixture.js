@@ -1,3 +1,4 @@
+"use strict";
 const { startPostgres, stopPostgres } = require("./db");
 
 exports.mochaGlobalSetup = async function () {

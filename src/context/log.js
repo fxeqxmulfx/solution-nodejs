@@ -1,3 +1,4 @@
+"use strict";
 const logger = require("koa-pino-logger");
 
 const rawLogger = require("pino");
@@ -8,4 +9,10 @@ function setupLogger(app) {
   app.use(logger({ level }));
 }
 
-module.exports = setupLogger;
+function setupTestLogger(app) {
+  const level = "silent";
+  app.context.rawLogger = rawLogger({ level });
+  app.use(logger({ level }));
+}
+
+module.exports = { setupLogger, setupTestLogger };

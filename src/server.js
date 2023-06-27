@@ -1,3 +1,4 @@
+"use strict";
 const { buildApp } = require("./app");
 const { stopPostgres } = require("./context/db");
 

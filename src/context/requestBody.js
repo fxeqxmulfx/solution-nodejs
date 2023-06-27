@@ -1,3 +1,4 @@
+"use strict";
 const { bodyParser } = require("@koa/bodyparser");
 
 function setupBodyParser(app) {
