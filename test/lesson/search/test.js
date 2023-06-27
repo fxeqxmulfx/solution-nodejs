@@ -2,7 +2,7 @@
 const runTests = require("../../runTests");
 const readFile = require("../../context/readFile");
 
-const migration = readFile("./test/lesson/search/migration.sql");
+const migration = readFile("./deploy/V1__migration.sql");
 const data = readFile("./test/lesson/search/data.sql");
 
 const cases = [
@@ -251,10 +251,41 @@ const cases = [
       { id: 10, visitCount: 1 },
     ],
   },
+  {
+    description: "Filter by all options",
+    path: "/",
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: {
+      date: "2019-09-01,2019-09-01",
+      status: 1,
+      teacherIds: "1,3",
+      studentsCount: "2,2",
+      page: 1,
+      lessonsPerPage: 10,
+    },
+    status: 200,
+    result: [
+      {
+        id: 1,
+        date: "2019-09-01",
+        title: "Green Color",
+        status: 1,
+        visitCount: 2,
+        students: [
+          { id: 1, name: "Ivan", visit: true },
+          { id: 2, name: "Sergey", visit: true },
+          { id: 3, name: "Maxim", visit: false },
+        ],
+        teachers: [
+          { id: 1, name: "Sveta" },
+          { id: 3, name: "Angelina" },
+        ],
+      },
+    ],
+  },
 ];
 
 describe("Tests for module a lesson.search", () => {
   runTests(migration, data, cases);
 });
-
-module.exports = cases;

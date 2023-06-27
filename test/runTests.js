@@ -75,6 +75,11 @@ function runTests(migration, data, cases) {
                 return;
               }
               chai.expect(item.status).to.equal(res.status);
+              if (item.resultLength != null) {
+                chai.expect(item.resultLength).to.equal(res.body.length);
+                done();
+                return;
+              }
               deepEqual(item.result, res.body);
               done();
             });

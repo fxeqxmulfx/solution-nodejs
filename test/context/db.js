@@ -28,12 +28,12 @@ async function setupMigration(dbClient, migration) {
 
 async function setupDbClient() {
   const dbClient = await globalThis.db.connect();
-  dbClient.query("BEGIN");
+  dbClient.query("begin;");
   return dbClient;
 }
 
 async function releaseDbClient(dbClient) {
-  await dbClient.query("ROLLBACK");
+  await dbClient.query("rollback;");
   dbClient.release();
 }
 

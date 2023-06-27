@@ -1,12 +1,14 @@
 {
   "name": "solution-nodejs",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "",
-  "main": "./src/server.js",
+  "main": "./src/index.js",
   "scripts": {
-    "start": "node -e 'require(\"./src/server\").startGlobalServer()'",
+    "start": "node ./src/index.js",
+    "build": "ncc build ./src/index.js --out dist --target es2022 --minify",
+    "cleanBuild": "rm -r dist",
     "test": "env DEBUG=testcontainers mocha --require ./test/context/fixture.js ./test/**/* --timeout 120000",
-    "watch": "env DEBUG=testcontainers mocha --require ./test/context/fixture.js ./test/**/* --watch --timeout 10000",
+    "watch": "env DEBUG=testcontainers mocha --require ./test/context/fixture.js ./test/**/* --watch --timeout 10000 | pino-pretty",
     "format": "prettier -w ./"
   },
   "keywords": [],
@@ -26,9 +28,11 @@
     "yesql": "^6.1.0"
   },
   "devDependencies": {
+    "@vercel/ncc": "^0.36.1",
     "chai": "^4.3.7",
     "chai-http": "^4.4.0",
     "mocha": "^10.2.0",
+    "pino-pretty": "^10.0.0",
     "prettier": "^2.8.8",
     "testcontainers": "^9.9.1"
   }

@@ -2,15 +2,16 @@
 const logger = require("koa-pino-logger");
 
 const rawLogger = require("pino");
+const { getEnv } = require("../utils/env");
 
 function setupLogger(app) {
-  const level = process.env.LOG_LEVEL ?? "info";
+  const level = getEnv("LOG_LEVEL", "info");
   app.context.rawLogger = rawLogger({ level });
   app.use(logger({ level }));
 }
 
 function setupTestLogger(app) {
-  const level = "silent";
+  const level = getEnv("LOG_LEVEL_DEBUG", "silent");
   app.context.rawLogger = rawLogger({ level });
   app.use(logger({ level }));
 }

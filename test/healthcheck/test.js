@@ -5,7 +5,7 @@ const cases = [
   {
     description: "Checking a healthcheck",
     path: "/healthcheck",
-    method: "POST",
+    method: "GET",
     status: 200,
     result: { health: true },
   },

@@ -3,6 +3,7 @@ require("dotenv").config();
 const Koa = require("koa");
 const setupRouter = require("./context/router");
 const lessonSearchRouter = require("./lesson/search/router");
+const lessonGeneratorRouter = require("./lesson/generator/router");
 const healthCheckRouter = require("./healthcheck/router");
 const { setupLogger, setupTestLogger } = require("./context/log");
 const setupBodyParser = require("./context/requestBody");
@@ -17,6 +18,7 @@ function buildApp() {
   setupBodyParser(app);
   setupRouter(app, healthCheckRouter);
   setupRouter(app, lessonSearchRouter);
+  setupRouter(app, lessonGeneratorRouter);
   return app;
 }
 
@@ -28,6 +30,7 @@ function testBuildApp(dbClient) {
   setupBodyParser(app);
   setupRouter(app, healthCheckRouter);
   setupRouter(app, lessonSearchRouter);
+  setupRouter(app, lessonGeneratorRouter);
   return app;
 }
 
