@@ -18,7 +18,7 @@ docker compose up
 path: "/"
 method: "POST"
 headers: { "Content-Type": "application/json" }
-body: {
+body: {               // all fields are optional
   date: "2019-09-01", // by date
   status: 1,          // by status 0 or 1
   teacherIds: "1,3",  // in teachersIds
@@ -51,7 +51,7 @@ result: [
 path: "/"
 method: "POST"
 headers: { "Content-Type": "application/json" }
-body: {
+body: {                          // all fields are optional
   date: "2019-09-01,2019-09-01", // in between date
   status: 1,                     // by status 0 or 1
   teacherIds: "1,3",             // in teachersIds
